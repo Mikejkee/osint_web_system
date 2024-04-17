@@ -1,0 +1,15 @@
+FROM adoptopenjdk/openjdk11-openj9
+
+
+RUN apt-get update && apt-get -y install openssh-server supervisor nano
+RUN mkdir /var/run/sshd
+RUN echo 'root:root' | chpasswd
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+ADD neo4j-community-4.2.3-unix.tar.gz neo4j
+
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./osint/utils/neo4j/conf/neo4j.conf /neo4j/neo4j-community-4.2.3/conf/neo4j.conf
+
+EXPOSE 22 80 443
+CMD ["/usr/bin/supervisord"]

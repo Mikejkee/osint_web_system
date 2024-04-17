@@ -1,0 +1,94 @@
+{
+    "surname": {
+      "available_services": {
+        "service_sur1": {
+          "service_type": "surname_service_1",
+          "description": "Service INPUT(SURNAME), OUTPUT(NAME)"
+        },
+        "service_sur2": {
+          "service_type": "surname_service_2",
+          "description": "Service INPUT(SURNAME), OUTPUT(PATRONYMIC)"
+        },
+        "service_sur3": {
+          "service_type": "surname_service_2",
+          "description": "Service INPUT(SURNAME), OUTPUT(PHONE)"
+        }
+      },
+      "form_parameters": {
+        "id": "input_surname",
+        "class": "form-control",
+        "type": "text",
+        "onchange": "checkSearchParams(this.id)",
+        "about": "Фамилия"
+      }
+    },
+    "name": {
+      "available_services": {
+        "service_nm1": {
+          "service_type": "name_service_1",
+          "description": "Service INPUT(NAME), OUTPUT(SURNAME)"
+        },
+        "service_nm2": {
+          "service_type": "name_service_2",
+          "description": "Service INPUT(NAME), OUTPUT(PATRONYMIC)"
+        },
+        "service_nm3": {
+          "service_type": "name_service_3",
+          "description": "Service INPUT(NAME), OUTPUT(PHONE)"
+        }
+      },
+      "form_parameters": {
+        "id": "input_name",
+        "class": "form-control",
+        "type": "text",
+        "onchange": "checkSearchParams(this.id)",
+        "about": "Имя"
+      }
+    },
+    "email": {
+      "available_services": {
+        "service_em1": {
+          "service_type": "email_service_1",
+          "description": "Service INPUT(EMAIL), OUTPUT(SURNAME)"
+        },
+        "service_em2": {
+          "service_type": "email_service_2",
+          "description": "Service INPUT(EMAIL), OUTPUT(PATRONYMIC)"
+        },
+        "service_em3": {
+          "service_type": "email_service_3",
+          "description": "Service INPUT(EMAIL), OUTPUT(PHONE)"
+        }
+      },
+      "form_parameters": {
+        "id": "input_email",
+        "class": "form-control",
+        "type": "email",
+        "onchange": "checkSearchParams(this.id)",
+        "about": "Почта"
+      }
+    },
+    "photo": {
+      "available_services": {
+        "service_ph1": {
+          "service_type": "photo_service_1",
+          "description": "Service INPUT(PHOTO), OUTPUT(SURNAME)"
+        },
+        "service_ph2": {
+          "service_type": "photo_service_2",
+          "description": "Service INPUT(PHOTO), OUTPUT(PATRONYMIC)"
+        },
+        "service_ph3": {
+          "service_type": "photo_service_3",
+          "description": "Service INPUT(PHOTO), OUTPUT(NAME)"
+        }
+      },
+      "form_parameters": {
+        "id": "input_photo",
+        "class": "form-control",
+        "type": "file",
+        "onchange": "checkSearchParams(this.id)",
+        "about": "Фото"
+      }
+    }
+}

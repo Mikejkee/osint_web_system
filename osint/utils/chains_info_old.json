@@ -1,0 +1,1 @@
+{"parameters_block": {"Номер телефона": ["Test Number Chain"]}, "chain_info": {"Test Number Chain": {"description": "Test Number Chain собирает информацию о телефонном номере", "input_parameters": {"phones-number": {"class": "form-control", "about": "Номер телефона", "type": "text", "onchange": "checkSearchParams(this.parentNode.parentNode)"}}}}}

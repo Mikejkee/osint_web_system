@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %} Обзор {% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <div class="card card-2">
+            <ul class="tab-list">
+                <li class="tab-list__item active">
+                    <a class="tab-list__link" href="#tab1" data-toggle="tab">Человек</a>
+                </li>
+                <li class="tab-list__item">
+                    <a class="tab-list__link" href="#tab2" data-toggle="tab">Группа лиц</a>
+                </li>
+                <li class="tab-list__item">
+                    <a class="tab-list__link" href="#tab3" data-toggle="tab">Организация</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab1">
+                    <form method="POST" id="search_form">
+                        {% csrf_token %}
+                        {%  for field in form.visible_fields %}
+                        <div class="input-group">
+                            <label class="label-sf">{{field.label}}:</label>
+                            {{  field }}
+                        </div>
+                        {%  endfor %}
+                        <button type="submit" id="search_submit" class="glo">Поиск</button>
+<!--                        <a href="#" id="search_submit" class="glo">Поиск</a>-->
+                    </form>
+                </div>
+                <div class="tab-pane" id="tab2">
+                    <form method="POST" action="#">
+                        <div class="input-group">
+                            <label class="label-sf">Имя:</label>
+                            <input class="input--style-1 input-sf" type="text" name="location" placeholder="Имя" required="required">
+                        </div>
+                        <div class="input-group">
+                            <label class="label-sf">Фамилия:</label>
+                            <input class="input--style-1 input-sf" type="text" name="location" placeholder="Фамилия" required="required">
+                        </div>
+                        <div class="input-group">
+                            <label class="label-sf">Отчество:</label>
+                            <input class="input--style-1 input-sf" type="text" name="location" placeholder="Отчество" required="required">
+                        </div>
+                        <div class="input-group">
+                            <label class="label-sf">Дата рождения:</label>
+                            <input class="input--style-1 input-sf" type="text" name="location" placeholder="Дата рождения" required="required">
+                        </div>
+                        <a href="#" class="glo">Поиск группы лиц</a>
+                    </form>
+                </div>
+                <div class="tab-pane" id="tab3">
+                    <form method="POST" action="#">
+                        <div class="input-group">
+                            <label class="label-sf">Отчество:</label>
+                            <input class="input--style-1 input-sf" type="text" name="origin" placeholder="Отчество" required="required">
+                        </div>
+                        <a href="#" class="glo">Поиск организации</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-2"></div>
+</div>
+
+
+<!-- content -->
+
+
+{% endblock content  %}

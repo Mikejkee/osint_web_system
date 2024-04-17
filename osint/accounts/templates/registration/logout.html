@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load filtersandtags %}
+
+{% block title %} Вход {% endblock title %}
+
+{% block content %}
+<h2>You are Logged out</h2>
+<a  href="{% url 'login' %}">Log in again</a>
+<!-- content -->
+
+
+{% endblock content  %}

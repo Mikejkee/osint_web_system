@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load filtersandtags %}
+
+{% block title %} Вход {% endblock title %}
+
+{% block login %}
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <div class="card card-2">
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab1">
+                    <form method="POST" id="search_form">
+                        {% csrf_token %}
+                        {%  for field in form.visible_fields %}
+                        <div class="input-group">
+                            <label class="label-sf">{{field.label}}:</label>
+                            {{  field }}
+                        </div>
+                        {%  endfor %}
+                        <button type="submit" id="search_submit" class="glo">Войти</button>
+<!--                        <a href="#" id="search_submit" class="glo">Поиск</a>-->
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-4"></div>
+</div>
+
+{% endblock login  %}
+
+{% block content %}
+<h2>Вы уже вошли!</h2>
+{% endblock content  %}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+{% load static %}
+{% load filtersandtags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/ios7-switch/ios7-switch.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/datepicker/daterangepicker.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/mdi-font/css/material-design-iconic-font.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'vendor/mdi-font/css/material-design-iconic-font.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/popoto/popoto.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/vis/vis-network.min.css' %}">
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+    {% block link %} {% endblock link %}
+    <title>{% block title %} Главная страница {% endblock title %} </title>
+
+</head>
+<!--  Верхняя панель -->
+
+<body>
+<div class="row bg-dark">
+    <div class='col-2'>
+        <nav class="navbar navbar-expand-sm">
+            <div class='nav-top '>
+                <a class='link' href="{% url 'view' %}">
+                    <div class='prev'>&#xf2bc;</div>
+                    <div class='small'>&#xf2bc;</div>
+                    <div class='full'>
+                        <div class='f1'>Обзор</div>
+                    </div>
+                </a>
+                <a class='link' href="{% url 'search' %}">
+                    <div class='prev'>&#xf002;</div>
+                    <div class='small'>&#xf002;</div>
+                    <div class='full'>
+                        <div class='f1'>Поиск</div>
+                    </div>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <div class='col-8'></div>
+
+    <div class='col-2'>
+        <nav class="navbar navbar-expand-sm">
+            <div class='nav-top '>
+
+                {% if user.is_authenticated %}
+                    <a class='link' href="{% url 'view' %}">
+                        <div class='prev'>&#xf2c0;</div>
+                        <div class='small'>&#xf2c0;</div>
+                        <div class='full'>
+                            <div class='f1' id="django_user">{{ user.username }}</div>
+                        </div>
+                    </a>
+                    <a class='link' href="{% url 'logout' %}">
+                        <div class='prev'>&#xf00d;</div>
+                        <div class='small'>&#xf00d;</div>
+                        <div class='full'>
+                            <div class='f1'>Выход</div>
+                        </div>
+                    </a>
+                {% else %}
+                    <a class='link' href="{% url 'login' %}">
+                        <div class='prev'>&#xf00c;</div>
+                        <div class='small'>&#xf00c;</div>
+                        <div class='full'>
+                            <div class='f1'>Войти</div>
+                        </div>
+                    </a>
+                    <a class='link' href="{% url 'search' %}">
+                        <div class='prev'>&#xf234;</div>
+                        <div class='small'>&#xf234;</div>
+                        <div class='full'>
+                            <div class='f1'>Регистрация</div>
+                        </div>
+                    </a>
+                {% endif %}
+            </div>
+        </nav>
+    </div>
+</div>
+
+<div id="body" class="home_is_visible">
+
+
+    <!-- Основа страницы -->
+    {% if user.is_authenticated %}
+        <!-- Если авторизованы, показывем контент -->
+        {% block content %}
+        {% endblock content %}
+    {% else %}
+        {% url 'login' as top_path %}
+        {% if top_path != request.path %}
+            <script type="text/javascript">
+                alert('Необходимо войти!');
+            </script>
+        {% endif %}
+
+        <!-- Иначе необходимо залогиниться -->
+        {% block login %}
+        {% endblock login %}
+    {% endif %}
+</div>
+
+<!--===============================================================================================-->
+<script src="{% static 'vendor/jquery/jquery-3.4.1.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'vendor/jquery/jquery.validate.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'vendor/jquery/jquery.validate.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'vendor/bootstrap/js/jquery.bootstrap.wizard.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'vendor/bootstrap/js/jquery.bootstrap.wizard.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'js/main.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'vendor/datepicker/moment.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'vendor/datepicker/daterangepicker.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'vendor/d3/d3.v6.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'js/ajax_tasks.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'js/reconnecting-websocket.min.js' %}"></script>
+<!--===============================================================================================-->
+
+<!--===============================================================================================-->
+
+<!--===============================================================================================-->
+
+<!--===============================================================================================-->
+<script src="{% static 'js/info_visualization.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'js/d3graph.js' %}"></script>
+<!--===============================================================================================-->
+{% block scripts %}
+{% endblock scripts %}
+</body>
+</html>

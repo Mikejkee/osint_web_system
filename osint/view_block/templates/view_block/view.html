@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block title %} Обзор {% endblock title %}
+
+{% block content %}
+
+    <!-- Кнопка выбора элементов -->
+    <div class="button">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+    </div>
+
+
+    <!-- Центральное окно -->
+    <div class="row">
+        <!-- Кнопка поиска -->
+        <div class="col-1">
+            <a href="{% url 'search_form' %}" class="fciA navItem"><span class="fciSpan">&#xf002;</span></a>
+        </div>
+
+        <div class="col-10">
+
+            <nav class="pt-3">
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-tasks-tab" data-toggle="tab" href="#nav-tasks"
+                       role="tab" aria-controls="nav-tasks" aria-selected="true">Активные Задания</a>
+                    <a class="nav-item nav-link" id="nav-view-tab" data-toggle="tab" href="#nav-view" role="tab"
+                       aria-controls="nav-view" aria-selected="false">Обзор</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-tasks" role="tabpanel" aria-labelledby="nav-tasks-tab">
+                    <table class="table table-hover" id="task_status">
+                        <thead>
+                        <tr>
+                            <th class="col-2">Время начала поиска</th>
+                            <th class="col-3">Название сервиса</th>
+                            <th class="col-5">Что ищем</th>
+                            <th class="col-2">Статус</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for task in tasks %}
+                            <tr>
+                                <td>{{ task.created }}</td>
+                                <td>{{ task.search_type }}</td>
+                                <td>{{ task.search_value }}</td>
+                                <td>
+                                <span class="badge badge-pill badge-{% if task.status == 'completed' %}success{% else %}warning{% endif %}">
+                                  {{ task.status }}
+                                </span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane fade" id="nav-view" role="tabpanel" aria-labelledby="nav-view-tab">
+                    <!-- Графовое отображение -->
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <th class="col-3">
+                                        <div id="graphInfo"> </div>
+                                    </th>
+                                    <th class="col-6">
+                                        <div id="graph"> </div>
+                                    </th>
+                                    <th class="col-3" id="nodeInfo">
+                                    </th>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                </div>
+
+        </div>
+
+        <div class="col-1"></div>
+        </div>
+    </div>
+
+
+    <!-- Панель выбора элементов -->
+    {# TODO: Добавить подгрузку полей и сервисов из json   #}
+    <div class='menu'>
+        <nav>
+            <ul>
+                <li>
+                    <a href='#' data-class='home_is_visible'>Фамилия</a>
+                    <label class="ios7-switch" style="font-size: 24px;">
+                        <input type="checkbox" name="surname" value="text" about="Фамилия">
+                        <span></span>
+                    </label>
+                </li>
+                <li>
+                    <a href='#' data-class='aboutus_is_visible'>Имя</a>
+                    <label class="ios7-switch" style="font-size: 24px;">
+                        <input type="checkbox" name="name" value="text" about="Имя">
+                        <span></span>
+                    </label>
+                </li>
+                <li>
+                    <a href='#' data-class='clients_is_visible'>Почта</a>
+                    <label class="ios7-switch" style="font-size: 24px;">
+                        <input type="checkbox" name="email" value="email" about="Почта">
+                        <span></span>
+                    </label>
+                </li>
+                <li>
+                    <a href='#' data-class='clients_is_visible'>Фото</a>
+                    <label class="ios7-switch" style="font-size: 24px;">
+                        <input type="checkbox" name="photo" value="file" about="Фото">
+                        <span></span>
+                    </label>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- content -->
+{% endblock content %}
+
+{% block scripts %}
+
+<script>
+
+getNeo4jData()
+
+</script>
+
+{% endblock scripts %}

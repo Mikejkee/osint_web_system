@@ -1,0 +1,25 @@
+FROM python:3.7
+
+ENV PYTHONUNBUFFERED 1
+
+ENV DOCKERIZE_VERSION v0.6.1
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+
+COPY ./requirements.txt /requirements.txt
+RUN pip install -r /requirements.txt
+
+RUN mkdir /osint
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN sh -c "echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list.d/google.list"
+RUN apt-get update
+RUN apt-get install -y locales 
+RUN apt-get install -y google-chrome-stable
+RUN echo "LC_ALL=eru_RU.UTF-8" >> /etc/environment
+RUN echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen
+RUN  echo "LANG=ru_RU.UTF-8" > /etc/locale.conf
+RUN locale-gen ru_RU.UTF-8
+
+WORKDIR /osint
+COPY ./osint /osint

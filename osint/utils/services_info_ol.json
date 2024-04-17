@@ -1,0 +1,347 @@
+{
+  "parameters_block": {
+    "Номер машины": [
+      "Avinfo Bot Car",
+      "Vin01"
+    ],
+    "IP аддрес": [
+      "Iplogger",
+      "Whatifmyipaddress"
+    ],
+    "Имя аккаунта почты": [
+      "Mailsearch",
+      "Shiver"
+    ],
+    "URL аддрес": [
+      "Pop Music Vk",
+      "Suip",
+      "Urllogger",
+      "Whoisdom",
+      "Yandex News"
+    ],
+    "Первые 9 цифр страхового свидетельства": [
+      "Propfr"
+    ],
+    "Фамилия Vk аккаунта": [
+      "Rusfinder"
+    ],
+    "Имя Vk аккаунта": [
+      "Rusfinder"
+    ],
+    "Фамилия": [
+      "Service Nalog",
+      "Test Service Telephone Info"
+    ],
+    "Имя": [
+      "Service Nalog",
+      "Test Service Telephone Info",
+      "Twitter Parser"
+    ],
+    "Отчество": [
+      "Service Nalog"
+    ],
+    "Дата рождения": [
+      "Service Nalog"
+    ],
+    "Серия паспорта": [
+      "Service Nalog"
+    ],
+    "Номер паспорта": [
+      "Service Nalog"
+    ],
+    "Дата выдачи паспорта": [
+      "Service Nalog"
+    ],
+    "Номер телефона": [
+      "Test Service Telephone Info"
+    ],
+    "ID Vk аккаунта": [
+      "Tutnaidut",
+      "VKPhoto",
+      "VKUserinfo"
+    ],
+    "ID Twitter аккаунта": [
+      "Twitter Parser"
+    ],
+    "VIN машины": [
+      "Vin01"
+    ]
+  },
+  "service_info": {
+    "Avinfo Bot Car": {
+      "description": "AvinfoBotCar Parser info INPUT(car-number), OUTPUT(car info)",
+      "input_parameters": {
+        "car-number": {
+          "class": "form-control",
+          "about": "Номер машины",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "Iplogger": {
+      "description": "Iplogger Parser info INPUT(IP), OUTPUT(Город, страна, порт, время, провайдер, регион, статус, координаты)",
+      "input_parameters": {
+        "IP_addresses-ip": {
+          "class": "form-control",
+          "about": "IP аддрес",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "Mailsearch": {
+      "description": "Mailsearch Parser info INPUT(URL), OUTPUT(пароли)",
+      "input_parameters": {
+        "emails-user_name": {
+          "class": "form-control",
+          "about": "Имя аккаунта почты",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "Pop Music Vk": {
+      "description": "popMusicVK Parser , OUTPUT(исполнитель, название, длительность записи)",
+      "input_parameters": {
+        "URL_addresses-url": {
+          "class": "form-control",
+          "about": "URL аддрес",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "Propfr": {
+      "description": "Propfr Parser info INPUT(nine-digits-snils), OUTPUT(СНИЛС)",
+      "input_parameters": {
+        "nine-digits-snils": {
+          "class": "form-control",
+          "about": "Первые 9 цифр страхового свидетельства",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "Rusfinder": {
+      "description": "Rusfinder Parser info INPUT(surname, name), OUTPUT(Имя, фамилия, дата рождения, место рожения, город, страна, skype, школа, университет, телефон, работа, vk_id,  фото)",
+      "input_parameters": {
+        "vk-surname": {
+          "class": "form-control",
+          "about": "Фамилия Vk аккаунта",
+          "type": "text",
+          "onchange": ""
+        },
+        "vk-name": {
+          "class": "form-control",
+          "about": "Имя Vk аккаунта",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "Service Nalog": {
+      "description": "Service Nalog Parser info INPUT(surname, name), OUTPUT(ИНН)",
+      "input_parameters": {
+        "surname": {
+          "class": "form-control",
+          "about": "Фамилия",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        },
+        "name": {
+          "class": "form-control",
+          "about": "Имя",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        },
+        "patronymic": {
+          "class": "form-control",
+          "about": "Отчество",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        },
+        "date_of_birth": {
+          "class": "form-control",
+          "about": "Дата рождения",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        },
+        "passports-serial": {
+          "class": "form-control",
+          "about": "Серия паспорта",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        },
+        "passports-number": {
+          "class": "form-control",
+          "about": "Номер паспорта",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        },
+        "passports-issue_date": {
+          "class": "form-control",
+          "about": "Дата выдачи паспорта",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "Shiver": {
+      "description": "Shiver Parser info INPUT(URL), OUTPUT(пароли)",
+      "input_parameters": {
+        "emails-user_name": {
+          "class": "form-control",
+          "about": "Имя аккаунта почты",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "Suip": {
+      "description": "Suip Parser info INPUT(URL), OUTPUT(Поддомены)",
+      "input_parameters": {
+        "URL_addresses-url": {
+          "class": "form-control",
+          "about": "URL аддрес",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "Test Service Telephone Info": {
+      "description": "Test Service info INPUT(Имя, Фамилия, Телефонный номер), OUTPUT(Отчество, Тип телефона, Модель телефона, Комментарий по телефону)",
+      "input_parameters": {
+        "name": {
+          "class": "form-control",
+          "about": "Имя",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        },
+        "surname": {
+          "class": "form-control",
+          "about": "Фамилия",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        },
+        "phones-number": {
+          "class": "form-control",
+          "about": "Номер телефона",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "Tutnaidut": {
+      "description": "Tutnaidut Parser info INPUT(ID), OUTPUT(Имя, пол, дата рождения, город, фото)",
+      "input_parameters": {
+        "vk-id": {
+          "class": "form-control",
+          "about": "ID Vk аккаунта",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "Twitter Parser": {
+      "description": "Twitter Parser info INPUT(ID), OUTPUT(Имя, Дата регистрации на сайте, Дата рождения, Описание профиля)",
+      "input_parameters": {
+        "twitter-id": {
+          "class": "form-control",
+          "about": "ID Twitter аккаунта",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        },
+        "name": {
+          "class": "form-control",
+          "about": "Имя",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "Urllogger": {
+      "description": "Urllogger Parser info INPUT(URL), OUTPUT(Город, ip, страна, порт, время, провайдер, регион, статус, координаты)",
+      "input_parameters": {
+        "URL_addresses-url": {
+          "class": "form-control",
+          "about": "URL аддрес",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "Vin01": {
+      "description": "Vin01 Parser info INPUT(URL), OUTPUT(VIN, номер кузова, госномер, категория, цвет, номер ДК, номер двигателя, мощность двигателя, объем двигателя, модель, количество владельцев, период владения, тип машины, срок ТО, год выпуска)",
+      "input_parameters": {
+        "car-number": {
+          "class": "form-control",
+          "about": "Номер машины",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        },
+        "car-VIN": {
+          "class": "form-control",
+          "about": "VIN машины",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "VKPhoto": {
+      "description": "VKPhoto Parser info INPUT(ID), OUTPUT(Имя, дата рождения, город)",
+      "input_parameters": {
+        "vk-id": {
+          "class": "form-control",
+          "about": "ID Vk аккаунта",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "VKUserinfo": {
+      "description": "VKUserinfo Parser info INPUT(URL), OUTPUT(имя, фамилия, аватар, город, страна, последнее посещение, платформа, дата регитсрации, домен, видимость страницы)",
+      "input_parameters": {
+        "vk-id": {
+          "class": "form-control",
+          "about": "ID Vk аккаунта",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "Whatifmyipaddress": {
+      "description": "Whatifmyipaddress Parser info INPUT(IP), OUTPUT(Город, страна, континент, ASN, ISP, индекс, провайдер, регион, тип, координаты, имя хоста, сервис)",
+      "input_parameters": {
+        "IP_addresses-ip": {
+          "class": "form-control",
+          "about": "IP аддрес",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "Whoisdom": {
+      "description": "Whoisdom Parser info INPUT(URL), OUTPUT(ip, домены, список DNS-серверов, дата создания, )",
+      "input_parameters": {
+        "URL_addresses-url": {
+          "class": "form-control",
+          "about": "URL аддрес",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    },
+    "Yandex News": {
+      "description": "Yandex news Parser info INPUT(URL), OUTPUT(Новостные заголовки яндекса)",
+      "input_parameters": {
+        "URL_addresses-url": {
+          "class": "form-control",
+          "about": "URL аддрес",
+          "type": "text",
+          "onchange": "checkSearchParams(this.parentNode.parentNode)"
+        }
+      }
+    }
+  }
+}

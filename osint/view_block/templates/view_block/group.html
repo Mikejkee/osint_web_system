@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load filtersandtags %}
+
+{% block title %} Обзор {% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-2">
+    </div>
+    <div class="col-8">
+        <div class="card card-2">
+
+            {%  for person in group %}
+                {%  for field, info in person.attrs %}
+                    {% if field == 'main_info' %}
+                        <a href="{% url 'view' %}person/{{person.person_id}}"> {{info.name}} {{info.surname}} {{info.patronymic}} </a>
+                    {% endif %}
+                {%  endfor %}
+            {%  endfor %}
+        </div>
+
+
+    </div>
+    <div class="col-2"></div>
+</div>
+
+
+<!-- content -->
+
+
+{% endblock content  %}

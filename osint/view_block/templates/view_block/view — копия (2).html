@@ -1,0 +1,301 @@
+{% extends 'base.html' %}
+
+{% block title %} Обзор {% endblock title %}
+
+{% block content %}
+
+    <!-- Кнопка выбора элементов -->
+    <div class="button">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+    </div>
+
+
+    <!-- Центральное окно -->
+    <div class="row">
+        <!-- Кнопка поиска -->
+        <div class="col-1">
+            <a href="{% url 'search_form' %}" class="fciA navItem"><span class="fciSpan">&#xf002;</span></a>
+        </div>
+
+        <div class="col-10">
+
+            <nav class="pt-3">
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-tasks-tab" data-toggle="tab" href="#nav-tasks"
+                       role="tab" aria-controls="nav-tasks" aria-selected="true">Активные Задания</a>
+                    <a class="nav-item nav-link" id="nav-view-tab" data-toggle="tab" href="#nav-view" role="tab"
+                       aria-controls="nav-view" aria-selected="false">Обзор</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-tasks" role="tabpanel" aria-labelledby="nav-tasks-tab">
+                    <table class="table table-hover" id="task_status">
+                        <thead>
+                        <tr>
+                            <th class="col-2">Время начала поиска</th>
+                            <th class="col-3">Название сервиса</th>
+                            <th class="col-5">Что ищем</th>
+                            <th class="col-2">Статус</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for task in tasks %}
+                            <tr>
+                                <td>{{ task.created }}</td>
+                                <td>{{ task.search_type }}</td>
+                                <td>{{ task.search_value }}</td>
+                                <td>
+                                <span class="badge badge-pill badge-{% if task.status == 'completed' %}success{% else %}warning{% endif %}">
+                                  {{ task.status }}
+                                </span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane fade" id="nav-view" role="tabpanel" aria-labelledby="nav-view-tab">
+                    <table class="table table-hover" id="search_info">
+                        <thead>
+                            <tr>
+                                <th class="col-2">Тип данных</th>
+                                <th class="col-3" style="text-align: center;">Время поиска</th>
+                                <th class="col-6" style="text-align: center;">Данные</th>
+                                <th class="col-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>   </tbody>
+                    </table>
+
+                    <!-- Графовое отображение -->
+                    <div>
+
+                        <section class="ppt-section-main" style="height: 700px">
+
+                            <div id="popoto-graph" class="ppt-div-graph">
+                                <!-- Graph is generated here-->
+                            </div>
+
+                            <div id="vis" class="ppt-div-graph" style="margin-top: 20px">
+                                <!-- Results visualization will be generated here -->
+                            </div>
+
+                            <div id="popoto-cypher" class="ppt-container-query">
+                                <!-- Query viewer is generated here -->
+                            </div>
+
+                            <!-- Add a header with total number of results count -->
+                            <div class="ppt-section-header">
+                                RESULTS <span id="rescount" class="ppt-count"></span>
+                            </div>
+
+                            <div id="popoto-results" class="ppt-container-results">
+                                <!-- Results are generated here -->
+                            </div>
+
+                        </section>
+
+                    </div>
+                </div>
+
+        </div>
+
+        <div class="col-1"></div>
+        </div>
+    </div>
+
+
+    <!-- Панель выбора элементов -->
+    {# TODO: Добавить подгрузку полей и сервисов из json   #}
+    <div class='menu'>
+        <nav>
+            <ul>
+                <li>
+                    <a href='#' data-class='home_is_visible'>Фамилия</a>
+                    <label class="ios7-switch" style="font-size: 24px;">
+                        <input type="checkbox" name="surname" value="text" about="Фамилия">
+                        <span></span>
+                    </label>
+                </li>
+                <li>
+                    <a href='#' data-class='aboutus_is_visible'>Имя</a>
+                    <label class="ios7-switch" style="font-size: 24px;">
+                        <input type="checkbox" name="name" value="text" about="Имя">
+                        <span></span>
+                    </label>
+                </li>
+                <li>
+                    <a href='#' data-class='clients_is_visible'>Почта</a>
+                    <label class="ios7-switch" style="font-size: 24px;">
+                        <input type="checkbox" name="email" value="email" about="Почта">
+                        <span></span>
+                    </label>
+                </li>
+                <li>
+                    <a href='#' data-class='clients_is_visible'>Фото</a>
+                    <label class="ios7-switch" style="font-size: 24px;">
+                        <input type="checkbox" name="photo" value="file" about="Фото">
+                        <span></span>
+                    </label>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- content -->
+{% endblock content %}
+
+{% block scripts %}
+
+<script>
+
+    popoto.rest.CYPHER_URL = "http://localhost:7474/db/data/transaction/commit";
+    popoto.rest.AUTHORIZATION = "Basic " + btoa("neo4j:neo4j");
+    popoto.provider.node.Provider = {
+        "Data": {
+            "returnAttributes": ["data_type", "data"],
+            "constraintAttribute": "data_type",
+            "displayAttribute": 'data_type',
+            "autoExpandRelations": true,
+            "isAutoLoadValue": true
+        },
+        "Service": {
+            "returnAttributes": ["service_name"],
+            "constraintAttribute": "service_name",
+            "displayAttribute": 'service_name',
+            "autoExpandRelations": true,
+            "isAutoLoadValue": true
+        }
+    };
+
+    popoto.result.onTotalResultCount(function (count) {
+            document.getElementById("result-total-count").innerHTML = "(" + count + ")";
+        });
+    popoto.query.RESULTS_PAGE_SIZE = 100;
+    popoto.logger.LEVEL = popoto.logger.LogLevels.INFO;
+
+
+    /**
+     * Add a listener on result received to update map.
+     */
+    popoto.result.onGraphResultReceived(
+        function (graphResultObject) {
+
+            let nodes = convertNodes(graphResultObject.nodes);
+            let edges = convertEdges(graphResultObject.edges);
+            let container = document.getElementById('vis');
+
+            // provide the data in the vis format
+            let data = {
+                nodes: nodes,
+                edges: edges
+            };
+            let options = {
+                nodes: {
+                    shape: 'circle',
+                    borderWidth: 2,
+                    size: 20,
+                    font: {
+                        size: 10,
+                        color: '#ffffff'
+                    }
+                },
+                edges: {
+                    length: 200,
+                    font: {
+                        align: 'top',
+                        color: '#ffffff',
+                        strokeWidth: 0,
+                        size: 10
+                    },
+                    arrows: 'to'
+                },
+                groups: {
+                    "Data": {
+                        color: {background: '#68BDF6', border: '#5CA8DB'}
+                    },
+                    "Service": {
+                        color: {background: '#FF756E', border: '#E06760'}
+                    }
+                }
+            };
+
+            // initialize the network
+            let network = new vis.Network(container, data, options);
+        }
+    );
+
+    function convertNodes(nodes) {
+        let convertedNodes = [];
+
+        nodes.forEach(function (node) {
+            let nodeLabel = node.labels[0];
+            convertedNodes.push({
+                id: node.id,
+                label: (nodeLabel === "Data" ? node.properties["data_type"] : node.properties["service_name"]),
+                group: nodeLabel
+            })
+        });
+
+        return convertedNodes;
+    }
+
+    function convertEdges(edges) {
+        let convertedEdges = [];
+
+        edges.forEach(function (edge) {
+            convertedEdges.push({
+                from: edge.startNode,
+                to: edge.endNode,
+                label: edge.type
+            })
+        });
+
+        return convertedEdges;
+    }
+
+    // Start the generation using parameter as root label of the query.
+    popoto.start('Data'
+    )
+</script>
+
+{% endblock scripts %}
+
+{#popoto.start(#}
+{#        {#}
+{#            label: "Data",#}
+{#            rel: [#}
+{#                {#}
+{#                    label: "to_service",#}
+{#                    target: {#}
+{#                        label: "Service",#}
+{#                        value: [#}
+{#                            {#}
+{#                                service_name: "*",#}
+{#                            },#}
+{#                            {#}
+{#                                service_name: "GetContact",#}
+{#                            }#}
+{#                        ]#}
+{#                    }#}
+{#                },#}
+{#            ]#}
+{#        }#}
+{#    )#}
+{#                {#}
+{#                    label: "from_service",#}
+{#                    target: {#}
+{#                            label: "Data",#}
+{#                         value: [#}
+{#                            {#}
+{#                                data_type: "phones-number",#}
+{#                            },#}
+{#                            {#}
+{#                                data_type: "vk-id",#}
+{#                            }#}
+{#                        ]#}
+{#                    }#}
+{#                }#}

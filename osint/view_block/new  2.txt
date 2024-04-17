@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load filtersandtags %}
+
+{% block title %} Обзор {% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-2">
+    </div>
+    <div class="col-8">
+        <div class="card card-2">
+
+            {%  for field, info in person.items %}
+
+                {% if field != '_id' %}
+                {% get_verbose_field_name person field %}
+                    <div class="div-hr">
+                        <p> {{field}} </p>
+                        <hr class="hr-shadow">
+                    </div>
+                    <table class="person_table">
+                      <tbody>
+                      {% if field == 'main_info' %}
+
+                          {%  for elem, name in info.items %}
+                            <tr>
+                              <td class="person_td person_right_td"></td>
+                              <td class="person_td">{{ name }}</td>
+                            </tr>
+                          {%  endfor %}
+                      {% endif %}
+
+                      {% if field != 'main_info' %}
+                          {%  for index in info %}
+                            {% for name_val, value in index.items %}
+                                <tr>
+                                  <td class="person_td person_right_td"> {{ name_val }}</td>
+                                  <td class="person_td">{{ value }}</td>
+                                </tr>
+                            {% endfor %}
+                          {%  endfor %}
+                      {% endif %}
+                      </tbody>
+                    </table>
+                {% endif %}
+            {%  endfor %}
+        </div>
+
+
+    </div>
+    <div class="col-2"></div>
+</div>
+
+
+<!-- content -->
+
+
+{% endblock content  %}

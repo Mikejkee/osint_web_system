@@ -1,0 +1,308 @@
+{% extends 'base.html' %}
+
+{% block title %} Поиск {% endblock title %}
+
+{% block content %}
+
+    <!-- Кнока меню/закрытия--->
+    <div class="button">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+    </div>
+
+    <!-- Центральное окно-->
+    <div class="row pt-5">
+        <div class="col-2"></div>
+        <div class="col-8" id="main">
+            <form method="POST" id="taskForm" enctype="multipart/form-data">
+                {% csrf_token %}
+                <button type="submit" id="searchBtn" class="btn btn-primary">Поиск</button>
+            </form>
+        </div>
+        <div class="col-2"></div>
+    </div>
+
+
+
+    <!-- Панель выбора элементов -->
+    <div class='menu'>
+        <nav>
+            <div style="margin-top: 10px;">
+                <a class="menuTitle" id="serviceMenu" href="#"> Поиск по отдельным сервисам </a>
+                <ul id="choosingServiceMenu"> </ul>
+            </div>
+            <div style="margin-top: 10px;">
+                <a class="menuTitle" id="chainsMenu"href="#"> Поиск по цепочкам сервисов </a>
+                <ul id="choosingChainsMenu"> </ul>
+            </div>
+        </nav>
+    </div>
+
+{% endblock content %}
+
+{% block scripts %}
+    <script type="text/javascript">
+
+        $(document).on('click', '.choosingServiceMenu', function () {
+            let selectedMenu = $(this).parent();
+            if (selectedMenu.hasClass('open')) {
+                $.each(selectedMenu.children(), function () {
+                    if (!$(this).hasClass('choosingServiceMenu')) {
+                        $(this).hide('slow').remove();
+                    }
+                });
+                selectedMenu.removeClass('open');
+                selectedMenu.find('.fa-sort-asc').removeClass('fa-sort-asc menu-icon-asc').addClass('fa-sort-desc menu-icon-desc');
+            }
+            else {
+                selectedMenu.find('.fa-sort-desc').removeClass('fa-sort-desc menu-icon-desc').addClass('fa-sort-asc menu-icon-asc');
+                $.get("{% url 'get_services' %}", function (data) {
+                    $.each(data.parameters_block[selectedMenu.text()], function (key, service) {
+                        let serviceId = service.replace(/\s/g, '');
+                        selectedMenu.append($('<i>', {
+                            'class': 'fa fa-arrow-right menu-service',
+                        })
+                            .append($('<a>', {
+                                'text': service,
+                                'id': serviceId,
+                            }))
+                            .append($('<label>', {
+                                'class': 'ios7-switch',
+                            })
+                                .on('change', function () {
+                                    if ($(this).find('input').is(':checked')) {
+                                        $('#main').children()
+                                            .prepend($('<div>', {
+                                                    'id': 'main-'+serviceId,
+                                                    'class': 'form-group',
+                                                })
+                                                .append($.map(data.service_info[service].input_parameters, function (parameterInfo, parameterType) {
+                                                        return $('<label>', {
+                                                                    'for': 'input_'+'-'+serviceId,
+                                                                    'text': parameterInfo.about,
+                                                                    'style': 'margin-right: 10px;'
+                                                                })
+                                                                .append($('<input>', {
+                                                                    'id': 'input_'+'-'+serviceId,
+                                                                    'class': parameterInfo.class,
+                                                                    'name': parameterType,
+                                                                    'type': parameterInfo.type,
+                                                                    'onchange': parameterInfo.onchange,
+                                                                }))
+                                                                .append($('<br>'))
+                                                }))
+                                                .append($('<div>', {
+                                                        'id': 'service_input_' + serviceId,
+                                                        'class': 'btn-group-toggle',
+                                                        'data-toggle': 'buttons'
+                                                    })
+                                                    .append ($('<label>', {
+                                                                'class': 'btn btn-outline-secondary mr-2',
+                                                            })
+                                                            .append($('<input>', {
+                                                                'id': 'service_'+serviceId,
+                                                                'type': 'checkbox',
+                                                                'autocomplete': 'off',
+                                                                'disabled': true,
+                                                            })).append(service)
+                                                    ))
+                                            );
+                                        $('#main-'+serviceId).hide().show('slow')
+                                    }
+                                    else {
+                                        $('#main-'+serviceId).hide('slow', function () {
+                                            $(this).remove();
+                                        })
+                                    }
+                                })
+                                .append($('<input>', {
+                                    'type': 'checkbox',
+                                    'name': 'dataType',
+                                    'value': 'dataInfo.form_parameters.type',
+                                    'about': 'dataInfo.form_parameters.about'
+                                }))
+                                .append($('<span>'))
+                            ));
+                        selectedMenu.addClass('open');
+                        selectedMenu.find('#' + serviceId).hide().show('300')
+                    })
+                });
+            }
+        });
+    $(document).on('click', '.choosingChainsMenu', function () {
+            let selectedMenu = $(this).parent();
+            if (selectedMenu.hasClass('open')) {
+                $.each(selectedMenu.children(), function () {
+                    if (!$(this).hasClass('choosingChainsMenu')) {
+                        $(this).hide('slow').remove();
+                    }
+                });
+                selectedMenu.removeClass('open');
+                selectedMenu.find('.fa-sort-asc').removeClass('fa-sort-asc menu-icon-asc').addClass('fa-sort-desc menu-icon-desc');
+            }
+            else {
+                selectedMenu.find('.fa-sort-desc').removeClass('fa-sort-desc menu-icon-desc').addClass('fa-sort-asc menu-icon-asc');
+                $.get("{% url 'get_chains' %}", function (data) {
+                    $.each(data.parameters_block[selectedMenu.text()], function (key, chain) {
+                        let chainId = chain.replace(/\s/g, '');
+                        selectedMenu.append($('<i>', {
+                            'class': 'fa fa-arrow-right menu-service',
+                        })
+                            .append($('<a>', {
+                                'text': chain,
+                                'id': chainId,
+                            }))
+                            .append($('<label>', {
+                                'class': 'ios7-switch',
+                            })
+                                .on('change', function () {
+                                    if ($(this).find('input').is(':checked')) {
+                                        $('#main').children()
+                                            .prepend($('<div>', {
+                                                    'id': 'main-'+chainId,
+                                                    'class': 'form-group',
+                                                })
+                                                .append($.map(data.chain_info[chain].input_parameters, function (parameterInfo, parameterType) {
+                                                        return $('<label>', {
+                                                                    'for': 'input_'+'-'+chainId,
+                                                                    'text': parameterInfo.about,
+                                                                    'style': 'margin-right: 10px;'
+                                                                })
+                                                                .append($('<input>', {
+                                                                    'id': 'input_'+'-'+chainId,
+                                                                    'class': parameterInfo.class,
+                                                                    'name': parameterType,
+                                                                    'type': parameterInfo.type,
+                                                                    'onchange': parameterInfo.onchange,
+                                                                }))
+                                                                .append($('<br>'))
+                                                }))
+                                                .append($('<div>', {
+                                                        'id': 'chain_input_' + chainId,
+                                                        'class': 'btn-group-toggle',
+                                                        'data-toggle': 'buttons'
+                                                    })
+                                                    .append ($('<label>', {
+                                                                'class': 'btn btn-outline-secondary mr-2',
+                                                            })
+                                                            .append($('<input>', {
+                                                                'id': 'chain_'+chainId,
+                                                                'type': 'checkbox',
+                                                                'autocomplete': 'off',
+                                                                'disabled': true,
+                                                            })).append(chain)
+                                                    ))
+                                            );
+                                        $('#main-'+chainId).hide().show('slow')
+                                    }
+                                    else {
+                                        $('#main-'+chainId).hide('slow', function () {
+                                            $(this).remove();
+                                        })
+                                    }
+                                })
+                                .append($('<input>', {
+                                    'type': 'checkbox',
+                                    'name': 'dataType',
+                                    'value': 'dataInfo.form_parameters.type',
+                                    'about': 'dataInfo.form_parameters.about'
+                                }))
+                                .append($('<span>'))
+                            ));
+                        selectedMenu.addClass('open');
+                        selectedMenu.find('#' + chainId).hide().show('300')
+                    })
+                });
+            }
+        });
+
+
+
+       // Проверка сервисов
+        function checkSearchParams(parentNode) {
+            let checkParam = 1;
+            $(parentNode).find('.form-control').each(function () {
+               if (($(this).attr('onchange') !== "") && (!$(this).val())) {
+                   checkParam = 0;
+               }
+            });
+
+            if (checkParam === 1) {
+                $(parentNode).find('.btn-outline-secondary')
+                    .removeClass('btn-outline-secondary')
+                    .addClass('btn-outline-success')
+                    .children().removeAttr('disabled')
+            }
+            else {
+                $(parentNode).find('.btn-outline-success')
+                    .removeClass('btn-outline-success')
+                    .removeClass('active')
+                    .addClass('btn-outline-secondary')
+                    .children().attr('disabled', 'disabled');
+                }
+        }
+
+        // Скрытие двух пунктов в меню
+    $(document).on('click', '.menuTitle', function () {
+        if ($(this).hasClass('openMenu') && $(this).attr('id')==='serviceMenu') {
+            let submenu = $(this).parent().find('#choosingServiceMenu')
+            $.each(submenu.children(), function () {
+                if (!$(this).hasClass('choosingServiceMenu')) {
+                    $(this).hide('slow').remove();
+                }
+            });
+            $(this).removeClass('openMenu');
+        }
+        else if ($(this).hasClass('openMenu') && $(this).attr('id')==='chainsMenu') {
+            let submenu = $(this).parent().find('#choosingChainsMenu')
+            $.each(submenu.children(), function () {
+                if (!$(this).hasClass('choosingChainsMenu')) {
+                    $(this).hide('slow').remove();
+                }
+            });
+            $(this).removeClass('openMenu');
+        }
+        else if ($(this).attr('id')==='serviceMenu') {
+            $.get("{% url 'get_services' %}", function (data) {
+            $.each(data.parameters_block, function (dataType, dataInfo) {
+                $('#choosingServiceMenu')
+                    .append($('<li>')
+                        .append($('<a>', {
+                            'class': 'choosingServiceMenu',
+                            'href': '#',
+                            'text': dataType,
+                        })
+                            .append($('<i>', {
+                                'class': 'fa fa-sort-desc menu-icon-desc',
+                            }))
+                        )
+                    )
+            })
+        });
+            $(this).addClass('openMenu');
+        }
+        else if ($(this).attr('id')==='chainsMenu') {
+            $.get("{% url 'get_chains' %}", function (data) {
+            $.each(data.parameters_block, function (dataType, dataInfo) {
+                $('#choosingChainsMenu')
+                    .append($('<li>')
+                        .append($('<a>', {
+                            'class': 'choosingChainsMenu',
+                            'href': '#',
+                            'text': dataType,
+                        })
+                            .append($('<i>', {
+                                'class': 'fa fa-sort-desc menu-icon-desc',
+                            }))
+                        )
+                    )
+            })
+        });
+            $(this).addClass('openMenu');
+        }
+    })
+
+    </script>
+
+{% endblock scripts %}
